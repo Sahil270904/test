@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment | E-BusPass</title>
+    <link rel="stylesheet" href="/static/payment.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i data-lucide="bus"></i>
+                </div>
+                <span>E-BusPass</span>
+            </div>
+
+            <div class="nav-item">
+                <i data-lucide="layout-dashboard"></i>
+                <span>Dashboard</span>
+            </div>
+
+            <div class="nav-item">
+                <i data-lucide="ticket"></i>
+                <span>Book Pass</span>
+            </div>
+
+            <div class="nav-item active">
+                <i data-lucide="credit-card"></i>
+                <span>Payment</span>
+            </div>
+
+            <div class="nav-item">
+                <i data-lucide="clock"></i>
+                <span>Travel History</span>
+            </div>
+
+            <div class="nav-item">
+                <i data-lucide="bookmark"></i>
+                <span>Saved Trips</span>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <div class="payment-container">
+                
+                <!-- Header Badge -->
+                <div class="payment-header">
+                    <div class="header-badge">
+                        <i data-lucide="sparkles"></i>
+                        <span>Secure Payment ✨</span>
+                    </div>
+                    <h2>Complete Your Booking</h2>
+                    <p class="header-subtitle">Choose your preferred payment method</p>
+                </div>
+
+                <!-- Total Amount Card -->
+                <div class="amount-card">
+                    <div class="amount-icon">
+                        <i data-lucide="wallet"></i>
+                    </div>
+                    <div class="amount-details">
+                        <span class="amount-label">Total Amount to Pay</span>
+                        <span class="amount-value" id="totalAmount">₹0</span>
+                    </div>
+                    <div class="amount-badge">
+                        <i data-lucide="shield-check"></i>
+                        100% Secure
+                    </div>
+                </div>
+
+                <!-- Payment Options Grid -->
+                <div class="payment-options-grid">
+                    <div class="payment-option" data-method="gpay">
+                        <div class="option-icon gpay-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="Google Pay">
+                        </div>
+                        <div class="option-info">
+                            <h4>Google Pay</h4>
+                            <p>Fast & Secure</p>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+
+                    <div class="payment-option" data-method="phonepe">
+                        <div class="option-icon phonepe-icon">
+                            <img src="static/phonepe.jpg" alt="PhonePe">
+                        </div>
+                        <div class="option-info">
+                            <h4>PhonePe</h4>
+                            <p>Instant Payment</p>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+
+                    <div class="payment-option" data-method="paytm">
+                        <div class="option-icon paytm-icon">
+                            <img src="static/paytm-circle-logo-hd-png-701751694706614zmho56voff.png" alt="Paytm">
+                        </div>
+                        <div class="option-info">
+                            <h4>Paytm</h4>
+                            <p>Trusted by Millions</p>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+
+                    <div class="payment-option" data-method="card">
+                        <div class="option-icon card-icon">
+                            <i data-lucide="credit-card"></i>
+                        </div>
+                        <div class="option-info">
+                            <h4>Credit/Debit Card</h4>
+                            <p>All Major Cards</p>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+                </div>
+
+                <!-- UPI Payment Form (hidden initially) -->
+                <div id="upiForm" class="payment-form">
+                    <div class="form-header">
+                        <i data-lucide="smartphone"></i>
+                        <h3>Enter UPI Details</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i data-lucide="user"></i>
+                            UPI ID
+                        </label>
+                        <input type="text" id="upiId" placeholder="example@okhdfcbank">
+                        <small class="input-hint">Enter your UPI ID linked to your bank account</small>
+                    </div>
+
+                    <!-- QR Code Section -->
+                    <div class="qr-section">
+                        <div class="qr-content">
+                            <div class="qr-icon">
+                                <i data-lucide="qr-code"></i>
+                            </div>
+                            <h4>Scan to Pay</h4>
+                            <div class="qr-code">
+                                <img src="/static/sahilqr.png" alt="UPI QR Code" id="qrCodeImg">
+                            </div>
+                            <div class="merchant-info">
+                                <p><i data-lucide="user"></i> <strong>Sahil Gosavi</strong></p>
+                                <p><i data-lucide="building-2"></i> State Bank of India • 4423</p>
+                                <div class="upi-id-box">
+                                    <i data-lucide="credit-card"></i>
+                                    <span id="merchantUpiId">sahilgosavi2004@oksbi</span>
+                                    <button class="copy-btn" onclick="copyUPI()">
+                                        <i data-lucide="copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Payment Form (hidden initially) -->
+                <div id="cardForm" class="payment-form">
+                    <div class="form-header">
+                        <i data-lucide="credit-card"></i>
+                        <h3>Enter Card Details</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i data-lucide="credit-card"></i>
+                            Card Number
+                        </label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                        <div class="card-icons">
+                            <span>💳 Visa</span>
+                            <span>💳 Mastercard</span>
+                            <span>💳 RuPay</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <i data-lucide="calendar"></i>
+                                Expiry Date
+                            </label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <i data-lucide="lock"></i>
+                                CVV
+                            </label>
+                            <input type="password" id="cvv" placeholder="***" maxlength="3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i data-lucide="user"></i>
+                            Cardholder Name
+                        </label>
+                        <input type="text" id="cardName" placeholder="For eg. abc xyz pqr">
+                    </div>
+
+                    <div class="secure-badge">
+                        <i data-lucide="shield"></i>
+                        Your card details are 256-bit encrypted
+                    </div>
+                </div>
+
+                <!-- Buttons (hidden initially) -->
+                <div id="upiButtons" style="display: none;">
+                    <button class="view-pass-btn" onclick="processUPIPayment()">
+                        <i data-lucide="ticket"></i>
+                        View Your Pass
+                        <span id="payAmount"></span>
+                    </button>
+                </div>
+
+                <div id="cardButtons" style="display: none;">
+                    <button class="pay-btn" onclick="processCardPayment()">
+                        <i data-lucide="shield-check"></i>
+                        Pay Securely
+                        <span id="cardPayAmount"></span>
+                    </button>
+                </div>
+
+                <p class="secure-note">
+                    <i data-lucide="lock"></i>
+                    Secure payment gateway • 100% encrypted • PCI compliant
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Verification Modal -->
+    <div id="verificationModal" class="modal">
+        <div class="modal-content">
+            <div class="verification-animation">
+                <div class="loader"></div>
+                <div class="verification-text">
+                    <h3>Verifying Your Payment...</h3>
+                    <p id="verificationStatus">Processing your transaction</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success-content">
+            <div class="success-animation">
+                <div class="checkmark">
+                    <svg viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
+                    </svg>
+                </div>
+                <h3>Payment Successful!</h3>
+                <p>Your pass is ready</p>
+                <div class="confetti">🎉 ✨ 🎊</div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Transition Overlay -->
+    <div id="pageTransition" class="modal" style="display:none; background: rgba(5,11,31,0.97);">
+        <div class="modal-content" style="background: transparent; border: none; box-shadow: none; min-width: auto;">
+            <div class="loader"></div>
+            <p id="transitionText" style="color: white; font-size: 16px; letter-spacing: 1px; margin-top: 10px;">Preparing your pass...</p>
+        </div>
+    </div>
+
+    <script>
+        // Load booking data and display total amount
+        const bookingData = JSON.parse(localStorage.getItem("bookingData"));
+        let totalAmount = 0;
+        let selectedMethod = null;
+        
+        if (bookingData) {
+            let baseFare = bookingData.price;
+            let passengers = bookingData.passengers;
+            let subtotal = baseFare * passengers;
+            let tax = Math.round(subtotal * 0.05);
+            totalAmount = subtotal + tax;
+            document.getElementById("totalAmount").innerHTML = "₹" + totalAmount;
+            document.getElementById("payAmount").innerHTML = "₹" + totalAmount;
+            document.getElementById("cardPayAmount").innerHTML = "₹" + totalAmount;
+        } else {
+            window.location.href = "/home";
+        }
+
+        // Payment method selection
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove active class from all options
+                document.querySelectorAll('.payment-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                
+                // Add active class to selected option
+                this.classList.add('active');
+                
+                // Get selected method
+                selectedMethod = this.getAttribute('data-method');
+                
+                const upiForm = document.getElementById('upiForm');
+                const cardForm = document.getElementById('cardForm');
+                const upiButtons = document.getElementById('upiButtons');
+                const cardButtons = document.getElementById('cardButtons');
+                
+                if (selectedMethod === 'card') {
+                    // Show ONLY card form, hide UPI form
+                    upiForm.classList.remove('active');
+                    cardForm.classList.add('active');
+                    upiForm.style.display = 'none';
+                    cardForm.style.display = 'block';
+                    upiButtons.style.display = 'none';
+                    cardButtons.style.display = 'block';
+                } else {
+                    // Show ONLY UPI form, hide card form
+                    upiForm.classList.add('active');
+                    cardForm.classList.remove('active');
+                    upiForm.style.display = 'block';
+                    cardForm.style.display = 'none';
+                    upiButtons.style.display = 'block';
+                    cardButtons.style.display = 'none';
+                }
+            });
+        });
+
+        function copyUPI() {
+            const upiId = document.getElementById('merchantUpiId').innerText;
+            navigator.clipboard.writeText(upiId);
+            const copyBtn = document.querySelector('.copy-btn');
+            const originalHTML = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i data-lucide="check"></i>';
+            lucide.createIcons();
+            setTimeout(() => {
+                copyBtn.innerHTML = originalHTML;
+                lucide.createIcons();
+            }, 2000);
+            alert("UPI ID copied: " + upiId);
+        }
+
+        function showVerification() {
+            return new Promise((resolve) => {
+                const modal = document.getElementById('verificationModal');
+                modal.style.display = 'flex';
+                
+                let statuses = [
+                    "Initiating payment gateway",
+                    "Connecting to your bank",
+                    "Verifying credentials",
+                    "Processing transaction",
+                    "Almost done"
+                ];
+                
+                let step = 0;
+                const statusElement = document.getElementById('verificationStatus');
+                const progressFill = document.querySelector('.progress-fill');
+                
+                const interval = setInterval(() => {
+                    if (step < statuses.length) {
+                        statusElement.textContent = statuses[step] + '...';
+                        const progressPercent = ((step + 1) / statuses.length) * 100;
+                        progressFill.style.width = progressPercent + '%';
+                        step++;
+                    } else {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            modal.style.display = 'none';
+                            resolve();
+                        }, 500);
+                    }
+                }, 900);
+            });
+        }
+
+        // Global audio context — created on user tap to satisfy mobile autoplay policy
+        let audioCtx = null;
+
+        function unlockAudio() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                // Play silent buffer to fully unlock on iOS/Android
+                const buffer = audioCtx.createBuffer(1, 1, 22050);
+                const source = audioCtx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(audioCtx.destination);
+                source.start(0);
+            } catch (e) {}
+        }
+
+        function playSuccessSound() {
+            if (!audioCtx) return;
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const t = audioCtx.currentTime;
+
+                // Soft, warm "dinggg" — single bell strike with long decay
+                // Fundamental — E5 (warm, not too high)
+                const osc = audioCtx.createOscillator();
+                const g = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = 659.25;
+                g.gain.setValueAtTime(0, t);
+                g.gain.linearRampToValueAtTime(0.3, t + 0.01);
+                g.gain.exponentialRampToValueAtTime(0.001, t + 1.5);
+                osc.connect(g); g.connect(audioCtx.destination);
+                osc.start(t); osc.stop(t + 1.6);
+
+                // Soft octave shimmer — gives it warmth
+                const osc2 = audioCtx.createOscillator();
+                const g2 = audioCtx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.value = 1318.5;
+                g2.gain.setValueAtTime(0, t);
+                g2.gain.linearRampToValueAtTime(0.08, t + 0.01);
+                g2.gain.exponentialRampToValueAtTime(0.001, t + 0.8);
+                osc2.connect(g2); g2.connect(audioCtx.destination);
+                osc2.start(t); osc2.stop(t + 0.9);
+
+            } catch (e) {}
+        }
+
+        function navigateWithTransition(url) {
+            return new Promise((resolve) => {
+                const overlay = document.getElementById('pageTransition');
+                const text = document.getElementById('transitionText');
+                overlay.style.display = 'flex';
+
+                setTimeout(() => { text.textContent = 'Almost ready...'; }, 600);
+                setTimeout(() => { text.textContent = 'Redirecting...'; }, 1200);
+
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 1600);
+            });
+        }
+
+        function showSuccess() {
+            return new Promise((resolve) => {
+                const modal = document.getElementById('successModal');
+                modal.style.display = 'flex';
+
+                // Play success chime
+                playSuccessSound();
+                
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    resolve();
+                }, 2500);
+            });
+        }
+
+        async function processUPIPayment() {
+            if (!selectedMethod) {
+                alert("❌ Please select a payment method first");
+                return;
+            }
+            
+            const upiId = document.getElementById('upiId').value;
+            
+            if (!upiId) {
+                alert("❌ Please enter your UPI ID");
+                return;
+            }
+
+            // Unlock audio on user tap (mobile requires this)
+            unlockAudio();
+            
+            // Store payment info for result page
+            const paymentInfo = {
+                upiId: upiId,
+                paymentMethod: selectedMethod,
+                paymentDate: new Date().toISOString(),
+                transactionId: 'TXN' + Math.random().toString(36).substr(2, 10).toUpperCase()
+            };
+            localStorage.setItem("paymentInfo", JSON.stringify(paymentInfo));
+            
+            await showVerification();
+            await showSuccess();
+            await navigateWithTransition("/result");
+        }
+
+        async function processCardPayment() {
+            if (!selectedMethod) {
+                alert("❌ Please select a payment method first");
+                return;
+            }
+            
+            const cardNumber = document.getElementById('cardNumber').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+            const cvv = document.getElementById('cvv').value;
+            const cardName = document.getElementById('cardName').value;
+            
+            if (!cardNumber || !expiryDate || !cvv || !cardName) {
+                alert("❌ Please fill in all card details");
+                return;
+            }
+            
+            if (cardNumber.replace(/\s/g, '').length < 16) {
+                alert("❌ Please enter a valid 16-digit card number");
+                return;
+            }
+            
+            if (cvv.length < 3) {
+                alert("❌ Please enter a valid CVV");
+                return;
+            }
+
+            // Unlock audio on user tap (mobile requires this)
+            unlockAudio();
+            
+            const paymentInfo = {
+                paymentMethod: 'card',
+                cardLast4: cardNumber.slice(-4),
+                paymentDate: new Date().toISOString(),
+                transactionId: 'TXN' + Math.random().toString(36).substr(2, 10).toUpperCase()
+            };
+            localStorage.setItem("paymentInfo", JSON.stringify(paymentInfo));
+            
+            await showVerification();
+            await showSuccess();
+            await navigateWithTransition("/result");
+        }
+
+        // Format card number
+        const cardNumberInput = document.getElementById('cardNumber');
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s/g, '');
+                if (value.length > 16) value = value.slice(0, 16);
+                let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+                e.target.value = formatted;
+            });
+        }
+        
+        const expiryInput = document.getElementById('expiryDate');
+        if (expiryInput) {
+            expiryInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\//g, '');
+                if (value.length >= 2) {
+                    value = value.slice(0, 2) + '/' + value.slice(2, 4);
+                }
+                e.target.value = value;
+            });
+        }
+
+        lucide.createIcons();
+
+        document.body.style.opacity = 0;
+        setTimeout(() => {
+            document.body.style.transition = "opacity 0.4s ease";
+            document.body.style.opacity = 1;
+        }, 100);
+    </script>
+</body>
+</html>

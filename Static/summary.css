@@ -1,0 +1,714 @@
+/* summary.css - COMPLETE FIXED VERSION */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Inter', sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0a1f3c, #0f3c78);
+    color: white;
+    min-height: 100vh;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+/* Container with sidebar on LEFT */
+.container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex-shrink: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    box-shadow: 0 6px 20px rgba(0, 198, 255, 0.4);
+}
+
+.logo-icon i {
+    color: white;
+    width: 20px;
+    height: 20px;
+}
+
+.logo span {
+    font-size: 18px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.nav-item i {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+}
+
+.nav-item.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Main content area */
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px;
+    overflow-y: auto;
+    min-height: 100vh;
+}
+
+.summary-container {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* Header Section */
+.summary-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 255, 255, 0.1);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #00c6ff;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.header-badge i {
+    width: 14px;
+    height: 14px;
+}
+
+.summary-header h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #ffffff, #cceeff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-header-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 198, 255, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-header-icon i {
+    width: 18px;
+    height: 18px;
+    color: #00c6ff;
+}
+
+.card-header h3 {
+    flex: 1;
+    margin: 0;
+    font-size: 18px;
+    color: white;
+}
+
+.trip-badge, .price-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #00c6ff;
+}
+
+/* Route Details Card */
+.route-details-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+}
+
+/* Journey Path */
+.journey-path {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 25px 0;
+    padding: 0 20px;
+}
+
+.city {
+    text-align: center;
+}
+
+.city-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+}
+
+.city-dot.start {
+    background: #00ff88;
+    box-shadow: 0 0 10px #00ff88;
+}
+
+.city-dot.end {
+    background: #00c6ff;
+    box-shadow: 0 0 10px #00c6ff;
+}
+
+.city-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.city-time {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.path-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, #00ff88, #00c6ff);
+    margin: 0 20px;
+    position: relative;
+}
+
+.bus-animation {
+    position: absolute;
+    top: -12px;
+    left: 0;
+    animation: moveBus 3s linear infinite;
+    font-size: 20px;
+}
+
+@keyframes moveBus {
+    0% { left: 0; transform: translateX(0); }
+    100% { left: 100%; transform: translateX(-100%); }
+}
+
+/* Trip Tags */
+.trip-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tag i {
+    width: 14px;
+    height: 14px;
+    color: #00c6ff;
+}
+
+/* Bus Highlight */
+.bus-highlight {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0, 198, 255, 0.05);
+    border-radius: 14px;
+    margin-top: 15px;
+}
+
+.bus-icon-large {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bus-icon-large i {
+    width: 28px;
+    height: 28px;
+    color: white;
+}
+
+.bus-details {
+    flex: 1;
+}
+
+.bus-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.bus-features {
+    display: flex;
+    gap: 10px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.bus-rating {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.bus-rating span {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Price Breakdown Card */
+.price-breakdown-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+}
+
+.price-section {
+    margin-bottom: 20px;
+}
+
+.price-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #00c6ff;
+    margin-bottom: 12px;
+}
+
+.price-section-title i {
+    width: 16px;
+    height: 16px;
+}
+
+.price-detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.price-detail-row.subtotal {
+    font-weight: 600;
+    color: white;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    margin-top: 5px;
+    padding-top: 12px;
+}
+
+.price-detail-row.savings {
+    color: #00ff88;
+}
+
+.fee-waiver {
+    font-size: 10px;
+    color: #00ff88;
+    margin-left: 4px;
+}
+
+.divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+    margin: 20px 0;
+}
+
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.total-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.total-label i {
+    width: 20px;
+    height: 20px;
+    color: #00c6ff;
+}
+
+.total-amount {
+    font-size: 32px;
+    font-weight: bold;
+    color: #00c6ff;
+}
+
+.per-passenger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding-top: 12px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+.per-passenger i {
+    width: 14px;
+    height: 14px;
+}
+
+/* Payment Options */
+.payment-options {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.payment-options p {
+    font-size: 13px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.payment-options p i {
+    width: 14px;
+    height: 14px;
+}
+
+.payment-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.payment-icons span {
+    font-size: 13px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.payment-icons span:hover {
+    background: rgba(0, 198, 255, 0.2);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.back-btn {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: transparent;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.proceed-btn {
+    flex: 2;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.proceed-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 150, 255, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 80px;
+        padding: 20px 12px;
+    }
+    
+    .sidebar span:not(.logo span) {
+        display: none;
+    }
+    
+    .logo span {
+        display: none;
+    }
+    
+    .logo {
+        justify-content: center;
+    }
+    
+    .logo-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .nav-item {
+        justify-content: center;
+        padding: 12px;
+    }
+    
+    .main {
+        padding: 20px;
+    }
+    
+    .journey-path {
+        padding: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .path-line {
+        flex: none;
+        width: 3px;
+        height: 50px;
+        margin: 0;
+        background: linear-gradient(180deg, #00ff88, #00c6ff);
+    }
+    
+    .bus-animation {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: moveBusVertical 2.5s linear infinite;
+    }
+    
+    @keyframes moveBusVertical {
+        0% { top: -5px; }
+        100% { top: calc(100% - 15px); }
+    }
+    
+    .city-name {
+        font-size: 16px;
+    }
+    
+    .bus-highlight {
+        flex-wrap: wrap;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .total-amount {
+        font-size: 24px;
+    }
+    
+    .summary-header h2 {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100% !important;
+        height: auto !important;
+        position: fixed !important;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto !important;
+        z-index: 1000;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 8px 4px;
+        border-right: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(10, 15, 35, 0.95);
+        backdrop-filter: blur(20px);
+        gap: 0;
+    }
+
+    .logo { display: none; }
+
+    .sidebar span { display: none !important; }
+
+    .nav-item {
+        flex-direction: column;
+        padding: 8px 6px;
+        gap: 4px;
+        font-size: 10px;
+        border-radius: 10px;
+        flex: 1;
+        align-items: center;
+    }
+
+    .nav-item i { width: 20px; height: 20px; }
+
+    .main {
+        padding: 20px 16px 90px;
+    }
+
+    .route-details-card,
+    .price-breakdown-card {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .trip-tags {
+        gap: 8px;
+    }
+
+    .tag {
+        font-size: 11px;
+        padding: 6px 10px;
+    }
+
+    .bus-highlight {
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .card-header h3 {
+        font-size: 16px;
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 198, 255, 0.5);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 198, 255, 0.8);
+}

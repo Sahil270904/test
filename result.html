@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Bus Pass | E-BusPass</title>
+    <link rel="stylesheet" href="/static/result.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Page Transition Overlay -->
+<div id="pageTransition" class="page-transition">
+  <div class="transition-content">
+    <div class="loader"></div>
+    <p>Heading back home...</p>
+  </div>
+</div>
+    <div class="container">
+        <div class="result-wrapper">
+            <!-- Success Header -->
+            <div class="success-header">
+                <div class="checkmark-badge">
+                    <svg viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
+                    </svg>
+                </div>
+                <h1>Payment Successful!</h1>
+                <p>Your bus passes have been generated</p>
+            </div>
+
+            <!-- Multiple Passes Container -->
+            <div id="passesContainer"></div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="secondary-btn" onclick="goToHome()">
+                    <i data-lucide="home"></i>
+                    Back to Home
+                </button>
+                <button class="primary-btn" onclick="printPass()">
+                    <i data-lucide="printer"></i>
+                    Print All Passes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        // Load booking data
+        const bookingData = JSON.parse(localStorage.getItem("bookingData"));
+        const paymentInfo = JSON.parse(localStorage.getItem("paymentInfo"));
+        
+        if (!bookingData || !paymentInfo) {
+            window.location.href = "/home";
+        }
+        
+        // Get passenger count
+        const passengerCount = bookingData.passengers;
+        
+        // Generate pass number for each passenger
+        function generatePassNumber(passengerIndex) {
+            return 'EBP' + passengerIndex + Math.random().toString(36).substr(2, 7).toUpperCase();
+        }
+        
+        // Get bus icon
+        function getBusIcon(busType) {
+            if (busType.includes("Sleeper")) return "🛏️";
+            if (busType.includes("Semi")) return "💺";
+            if (busType.includes("Electric")) return "⚡";
+            if (busType.includes("PMPML")) return "🏙️";
+            return "🚌";
+        }
+        
+        // Create a single pass
+        function createPass(passengerNumber, passNumber) {
+            const passDiv = document.createElement('div');
+            passDiv.className = 'bus-pass';
+            
+            // Set validity (7 days from travel date)
+            const travelDate = new Date(bookingData.date);
+            const validityDate = new Date(travelDate);
+            validityDate.setDate(travelDate.getDate() + 7);
+            
+            passDiv.innerHTML = `
+                <div class="pass-header">
+                    <div class="pass-logo">
+                        <div class="logo-icon">
+                            <i data-lucide="bus"></i>
+                        </div>
+                        <div>
+                            <h2>E-BusPass</h2>
+                            <span>Digital Travel Pass</span>
+                        </div>
+                    </div>
+                    <div class="valid-badge">
+                        <i data-lucide="badge-check"></i>
+                        <span>VALID</span>
+                    </div>
+                </div>
+
+                <div class="pass-body">
+                    ${passengerCount > 1 ? `<div class="passenger-tag">Passenger ${passengerNumber} of ${passengerCount}</div>` : ''}
+                    
+                    <div class="journey-section">
+                        <div class="journey-path">
+                            <div class="journey-point">
+                                <div class="point-dot start"></div>
+                                <div class="point-label">FROM</div>
+                                <div class="point-city">${bookingData.from}</div>
+                            </div>
+                            <div class="journey-line">
+                                <div class="moving-bus">🚌</div>
+                            </div>
+                            <div class="journey-point">
+                                <div class="point-dot end"></div>
+                                <div class="point-label">TO</div>
+                                <div class="point-city">${bookingData.to}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <i data-lucide="calendar"></i>
+                            <div>
+                                <label>Travel Date</label>
+                                <span>${bookingData.date}</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i data-lucide="users"></i>
+                            <div>
+                                <label>Passenger</label>
+                                <span>${passengerNumber} of ${passengerCount}</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i data-lucide="bus"></i>
+                            <div>
+                                <label>Bus Type</label>
+                                <span>${getBusIcon(bookingData.busType)} ${bookingData.busType}</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i data-lucide="credit-card"></i>
+                            <div>
+                                <label>Payment via</label>
+                                <span>${paymentInfo.paymentMethod === 'card' ? '💳 Card' : '📱 ' + (paymentInfo.paymentMethod === 'gpay' ? 'Google Pay' : paymentInfo.paymentMethod === 'phonepe' ? 'PhonePe' : 'Paytm')}</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i data-lucide="smartphone"></i>
+                            <div>
+                                <label>UPI ID / Card</label>
+                                <span>${paymentInfo.upiId || 'Card Payment'}</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i data-lucide="clock"></i>
+                            <div>
+                                <label>Transaction ID</label>
+                                <span>${paymentInfo.transactionId}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="validity-section">
+                        <div class="validity-card">
+                            <i data-lucide="calendar-clock"></i>
+                            <div>
+                                <label>Pass Validity</label>
+                                <span>${validityDate.toLocaleDateString('en-IN')}</span>
+                                <small>Valid until this date</small>
+                            </div>
+                        </div>
+                        <div class="pass-number">
+                            <label>Pass Number</label>
+                            <span>${passNumber}</span>
+                        </div>
+                    </div>
+
+                    <div class="qr-section">
+                        <div class="qr-container">
+                            <div id="qr-${passNumber}" class="qr-code"></div>
+                            <p class="qr-note">Scan for verification</p>
+                        </div>
+                        <div class="conductor-note">
+                            <i data-lucide="shield"></i>
+                            <span>Conductor's Note: Valid only with valid ID proof</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pass-footer">
+                    <div class="terms">
+                        <i data-lucide="file-text"></i>
+                        <span>Valid for one journey only • Non-transferable • Subject to terms</span>
+                    </div>
+                </div>
+            `;
+            
+            return passDiv;
+        }
+        
+        // Generate all passes
+        const passesContainer = document.getElementById('passesContainer');
+        
+        for (let i = 1; i <= passengerCount; i++) {
+            const passNumber = generatePassNumber(i);
+            const pass = createPass(i, passNumber);
+            passesContainer.appendChild(pass);
+            
+            // Generate QR code for this pass
+            const qrData = JSON.stringify({
+                passNumber: passNumber,
+                passengerNumber: i,
+                from: bookingData.from,
+                to: bookingData.to,
+                date: bookingData.date,
+                busType: bookingData.busType,
+                transactionId: paymentInfo.transactionId
+            });
+            
+            // Small delay to ensure DOM element exists
+            setTimeout(() => {
+                new QRCode(document.getElementById(`qr-${passNumber}`), {
+                    text: qrData,
+                    width: 130,
+                    height: 130,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }, 100);
+        }
+        
+        // Show summary message
+        if (passengerCount > 1) {
+            const summaryDiv = document.createElement('div');
+            summaryDiv.className = 'multiple-passes-summary';
+            summaryDiv.innerHTML = `
+                <i data-lucide="info"></i>
+                <div>
+                    <h4>${passengerCount} Passes Generated</h4>
+                    <p>Each passenger must carry their own pass and valid ID proof</p>
+                </div>
+            `;
+            passesContainer.insertBefore(summaryDiv, passesContainer.firstChild);
+        }
+        
+        function goToHome() {
+    // Show transition overlay
+    const transition = document.getElementById('pageTransition');
+    if (transition) {
+        transition.classList.add('active');
+        
+        // Change text after 0.5 seconds
+        setTimeout(() => {
+            const textElement = transition.querySelector('p');
+            if (textElement) textElement.textContent = 'Almost there...';
+        }, 500);
+        
+        setTimeout(() => {
+            const textElement = transition.querySelector('p');
+            if (textElement) textElement.textContent = 'Redirecting to home';
+        }, 1000);
+    }
+    
+    // Clear localStorage and navigate after transition
+    setTimeout(() => {
+        localStorage.removeItem("bookingData");
+        localStorage.removeItem("paymentInfo");
+        window.location.href = "/home";
+    }, 1500);
+}
+        
+        function printPass() {
+            window.print();
+        }
+        
+        // Initialize Lucide icons after all content is loaded
+        setTimeout(() => {
+            lucide.createIcons();
+        }, 300);
+        
+        // Fade in animation
+        document.body.style.opacity = 0;
+        setTimeout(() => {
+            document.body.style.transition = "opacity 0.4s ease";
+            document.body.style.opacity = 1;
+        }, 100);
+    </script>
+</body>
+</html>

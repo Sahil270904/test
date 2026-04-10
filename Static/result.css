@@ -1,0 +1,741 @@
+/* result.css - Digital Bus Pass Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Inter', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0a1f3c, #0f3c78);
+    min-height: 100vh;
+    padding: 40px 20px;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.result-wrapper {
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Success Header */
+.success-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.checkmark-badge {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+}
+
+.checkmark-badge svg {
+    width: 100%;
+    height: 100%;
+}
+
+.checkmark-circle {
+    stroke: #00ff88;
+    stroke-width: 3;
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+    stroke: #00ff88;
+    stroke-width: 3;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.success-header h1 {
+    font-size: 28px;
+    background: linear-gradient(90deg, #ffffff, #cceeff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+}
+
+.success-header p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+/* Digital Bus Pass */
+.bus-pass {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    transition: 0.3s;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.bus-pass:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0, 150, 255, 0.2);
+    border-color: rgba(0, 255, 255, 0.5);
+}
+
+/* Passenger Tag */
+.passenger-tag {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Pass Header */
+.pass-header {
+    background: linear-gradient(135deg, rgba(0, 198, 255, 0.2), rgba(0, 114, 255, 0.2));
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.pass-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon i {
+    width: 24px;
+    height: 24px;
+    color: white;
+}
+
+.pass-logo h2 {
+    font-size: 20px;
+    margin-bottom: 2px;
+    color: white;
+}
+
+.pass-logo span {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.valid-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 255, 136, 0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.valid-badge i {
+    width: 18px;
+    height: 18px;
+    color: #00ff88;
+}
+
+.valid-badge span {
+    font-size: 14px;
+    font-weight: bold;
+    color: #00ff88;
+}
+
+/* Pass Body */
+.pass-body {
+    padding: 25px;
+}
+
+/* Journey Section */
+.journey-section {
+    margin-bottom: 25px;
+}
+
+.journey-path {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.journey-point {
+    text-align: center;
+}
+
+.point-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+}
+
+.point-dot.start {
+    background: #00ff88;
+    box-shadow: 0 0 10px #00ff88;
+}
+
+.point-dot.end {
+    background: #00c6ff;
+    box-shadow: 0 0 10px #00c6ff;
+}
+
+.point-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.point-city {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.journey-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, #00ff88, #00c6ff);
+    margin: 0 15px;
+    position: relative;
+}
+
+.moving-bus {
+    position: absolute;
+    top: -12px;
+    left: 0;
+    animation: moveBus 4s linear infinite;
+    font-size: 18px;
+}
+
+@keyframes moveBus {
+    0% { left: 0; transform: translateX(0); }
+    100% { left: 100%; transform: translateX(-100%); }
+}
+
+/* Details Grid - ICON COLORS FIXED */
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-item i {
+    width: 22px;
+    height: 22px;
+    color: #00c6ff !important;
+    stroke: #00c6ff !important;
+    stroke-width: 1.8;
+}
+
+.detail-item div {
+    flex: 1;
+}
+
+.detail-item label {
+    display: block;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.detail-item span {
+    font-size: 13px;
+    font-weight: 500;
+    color: white;
+}
+
+/* Validity Section - ICON COLORS FIXED */
+.validity-section {
+    background: rgba(0, 198, 255, 0.05);
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.validity-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.validity-card i {
+    width: 32px;
+    height: 32px;
+    color: #00c6ff !important;
+    stroke: #00c6ff !important;
+    stroke-width: 1.8;
+}
+
+.validity-card label {
+    display: block;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 4px;
+}
+
+.validity-card span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #00c6ff;
+}
+
+.validity-card small {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.pass-number {
+    text-align: right;
+}
+
+.pass-number label {
+    display: block;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 4px;
+}
+
+.pass-number span {
+    font-size: 13px;
+    font-family: monospace;
+    letter-spacing: 1px;
+    color: white;
+}
+
+/* QR Section */
+.qr-section {
+    text-align: center;
+}
+
+.qr-container {
+    display: inline-block;
+    text-align: center;
+}
+
+.qr-code {
+    background: white;
+    padding: 15px;
+    border-radius: 16px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.qr-note {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.conductor-note {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(255, 193, 7, 0.1);
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #ffc107;
+}
+
+.conductor-note i {
+    width: 16px;
+    height: 16px;
+    color: #ffc107 !important;
+    stroke: #ffc107 !important;
+}
+
+/* Pass Footer */
+.pass-footer {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.terms {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.terms i {
+    width: 14px;
+    height: 14px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Multiple Passes Summary - ICON COLORS FIXED */
+.multiple-passes-summary {
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 16px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.multiple-passes-summary i {
+    width: 32px;
+    height: 32px;
+    color: #00ff88 !important;
+    stroke: #00ff88 !important;
+}
+
+.multiple-passes-summary h4 {
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: white;
+}
+
+.multiple-passes-summary p {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.secondary-btn, .primary-btn {
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.secondary-btn i {
+    width: 18px;
+    height: 18px;
+    color: white !important;
+    stroke: white !important;
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border: none;
+    color: white;
+}
+
+.primary-btn i {
+    width: 18px;
+    height: 18px;
+    color: white !important;
+    stroke: white !important;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 150, 255, 0.4);
+}
+
+/* Force all Lucide icons to have proper colors */
+i[data-lucide] {
+    stroke-width: 1.8;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+    
+    .action-buttons, .multiple-passes-summary {
+        display: none;
+    }
+    
+    .bus-pass {
+        box-shadow: none;
+        border: 2px solid #00c6ff;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    
+    .valid-badge span {
+        color: #00ff88;
+    }
+    
+    .passenger-tag {
+        background: #00c6ff;
+        color: white;
+    }
+    
+    .detail-item i {
+        color: #00c6ff !important;
+    }
+    
+    .validity-card i {
+        color: #00c6ff !important;
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 16px 12px;
+    }
+    
+    .container {
+        max-width: 100%;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .journey-path {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .journey-line {
+        flex: none;
+        width: 3px;
+        height: 50px;
+        margin: 0;
+        background: linear-gradient(180deg, #00ff88, #00c6ff);
+    }
+    
+    .moving-bus {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: moveBusVertical 2.5s linear infinite;
+    }
+    
+    @keyframes moveBusVertical {
+        0% { top: -5px; }
+        100% { top: calc(100% - 15px); }
+    }
+    
+    .validity-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .pass-number {
+        text-align: center;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .success-header h1 {
+        font-size: 22px;
+    }
+    
+    .point-city {
+        font-size: 16px;
+    }
+
+    .pass-header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 18px;
+        text-align: center;
+    }
+
+    .pass-logo {
+        justify-content: center;
+    }
+
+    .pass-body {
+        padding: 18px;
+    }
+
+    .bus-pass {
+        border-radius: 18px;
+    }
+
+    .qr-code img {
+        width: 110px !important;
+        height: 110px !important;
+    }
+
+    .detail-item {
+        padding: 10px;
+    }
+
+    .detail-item span {
+        font-size: 12px;
+        word-break: break-all;
+    }
+
+    .secondary-btn, .primary-btn {
+        padding: 12px 20px;
+        font-size: 13px;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .multiple-passes-summary {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 198, 255, 0.5);
+    border-radius: 10px;
+}
+/* Page Transition Overlay - Add to result.css */
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a1f3c, #0f3c78);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  pointer-events: none;
+}
+
+.page-transition.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+.transition-content {
+  text-align: center;
+  animation: pulse 0.8s ease infinite;
+}
+
+.transition-content .loader {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(0, 198, 255, 0.2);
+  border-top: 3px solid #00c6ff;
+  border-right: 3px solid #0072ff;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 0.8s linear infinite;
+}
+
+.transition-content p {
+  font-size: 16px;
+  color: white;
+  letter-spacing: 1px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Also add a fade out for body as fallback */
+body {
+  transition: opacity 0.3s ease;
+}
+
+body.fade-out {
+  opacity: 0;
+}
