@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Payment | E-BusPass</title>
     <link rel="stylesheet" href="/static/payment.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -144,7 +144,7 @@
                             </div>
                             <h4>Scan to Pay</h4>
                             <div class="qr-code">
-                                <img src="/static/sahilqr.png" alt="UPI QR Code" id="qrCodeImg">
+                                <img src="{{ url_for('static', filename='sahilqr.jpg') }}?v=2" alt="UPI QR Code" id="qrCodeImg" style="width:150px;height:150px;display:block;">
                             </div>
                             <div class="merchant-info">
                                 <p><i data-lucide="user"></i> <strong>Sahil Gosavi</strong></p>
@@ -569,5 +569,6 @@
             document.body.style.opacity = 1;
         }, 100);
     </script>
+<script src="/static/script.js"></script>
 </body>
 </html>
