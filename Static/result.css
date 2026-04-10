@@ -281,6 +281,14 @@ body {
     stroke-width: 1.8;
 }
 
+/* Specific Aesthetic Colors for Detail Icons */
+.detail-item i[data-lucide="calendar"] { color: #FF9F43 !important; stroke: #FF9F43 !important; }
+.detail-item i[data-lucide="users"] { color: #EA5455 !important; stroke: #EA5455 !important; }
+.detail-item i[data-lucide="bus"] { color: #28C76F !important; stroke: #28C76F !important; }
+.detail-item i[data-lucide="credit-card"] { color: #7367F0 !important; stroke: #7367F0 !important; }
+.detail-item i[data-lucide="smartphone"] { color: #A8B8D8 !important; stroke: #A8B8D8 !important; }
+.detail-item i[data-lucide="clock"] { color: #FFCE67 !important; stroke: #FFCE67 !important; }
+
 .detail-item div {
     flex: 1;
 }
@@ -325,6 +333,9 @@ body {
     stroke: #00c6ff !important;
     stroke-width: 1.8;
 }
+
+/* Specific Aesthetic Color for Validity Icon */
+.validity-card i[data-lucide="calendar-clock"] { color: #FF9F43 !important; stroke: #FF9F43 !important; }
 
 .validity-card label {
     display: block;
@@ -557,6 +568,7 @@ i[data-lucide] {
 @media (max-width: 600px) {
     body {
         padding: 16px 12px;
+        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     }
     
     .container {
@@ -607,11 +619,11 @@ i[data-lucide] {
     }
     
     .success-header h1 {
-        font-size: 22px;
+        font-size: clamp(18px, 5.5vw, 24px);
     }
     
     .point-city {
-        font-size: 16px;
+        font-size: clamp(14px, 4vw, 18px);
     }
 
     .pass-header {
@@ -658,6 +670,157 @@ i[data-lucide] {
         flex-direction: column;
         text-align: center;
         padding: 15px;
+    }
+}
+
+/* Standard phones (≤400px) */
+@media (max-width: 400px) {
+    body {
+        padding: 12px 10px;
+    }
+
+    .success-header h1 {
+        font-size: clamp(16px, 5vw, 20px);
+    }
+
+    .success-header p {
+        font-size: 12px;
+    }
+
+    .pass-header {
+        padding: 14px 16px;
+    }
+
+    .pass-logo h2 {
+        font-size: 17px;
+    }
+
+    .logo-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .valid-badge {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .pass-body {
+        padding: 14px;
+    }
+
+    .detail-item {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .detail-item label {
+        font-size: 9px;
+    }
+
+    .detail-item span {
+        font-size: 11px;
+    }
+
+    .validity-card span {
+        font-size: 14px;
+    }
+
+    .pass-number span {
+        font-size: 11px;
+    }
+
+    .qr-code img {
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+    .conductor-note {
+        font-size: 10px;
+    }
+
+    .secondary-btn, .primary-btn {
+        padding: 11px 16px;
+        font-size: 12px;
+    }
+
+    .checkmark-badge {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+/* Small phones — iPhone SE (≤375px) */
+@media (max-width: 375px) {
+    body {
+        padding: 10px 8px;
+    }
+
+    .success-header h1 {
+        font-size: 17px;
+    }
+
+    .pass-logo h2 {
+        font-size: 15px;
+    }
+
+    .pass-body {
+        padding: 12px;
+    }
+
+    .detail-item {
+        padding: 7px;
+    }
+
+    .validity-section {
+        padding: 12px;
+    }
+
+    .validity-card i {
+        width: 26px;
+        height: 26px;
+    }
+
+    .bus-pass {
+        border-radius: 14px;
+    }
+
+    .passenger-tag {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+}
+
+/* Very small screens (≤320px) */
+@media (max-width: 320px) {
+    body {
+        padding: 8px 6px;
+    }
+
+    .success-header h1 {
+        font-size: 15px;
+    }
+
+    .pass-logo h2 {
+        font-size: 14px;
+    }
+
+    .point-city {
+        font-size: 13px;
+    }
+
+    .detail-item span {
+        font-size: 10px;
+    }
+
+    .qr-code img {
+        width: 85px !important;
+        height: 85px !important;
+    }
+
+    .secondary-btn, .primary-btn {
+        padding: 10px 12px;
+        font-size: 11px;
     }
 }
 
