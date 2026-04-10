@@ -220,7 +220,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!from || !to) return;
 
-        if (from === to) {
+        // Check if the inputs match our predefined major cities
+        const citiesLower = cities.map(c => c.toLowerCase());
+        const isFromMajorCity = citiesLower.includes(from);
+        const isToMajorCity = citiesLower.includes(to);
+
+        // Logic: 
+        // 1. If same location -> Incity
+        // 2. If either is a local stop (not in major cities list) -> Incity
+        // 3. Otherwise (both are distinct major cities) -> Intercity
+        if (from === to || !isFromMajorCity || !isToMajorCity) {
             if (incity) incity.classList.add("active");
         } else {
             if (intercity) intercity.classList.add("active");
@@ -359,3 +368,175 @@ window.smoothNavigate = function(url) {
         window.location.href = url;
     }
 };
+
+// ════════════════════════════════════════════════════════
+//  APPLE-STYLE DRAGGABLE BOTTOM NAV (Mobile Only)
+//  Touch & slide across tabs — highlight follows finger,
+//  navigates on release. Includes glow pill + haptics.
+// ════════════════════════════════════════════════════════
+(function initDraggableNav() {
+    const isMobileNav = () => window.innerWidth <= 600;
+
+    function setup() {
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+
+        const navItems = Array.from(sidebar.querySelectorAll('.nav-item'));
+        if (navItems.length === 0) return;
+
+        // ── Create the sliding glow pill ──
+        let pill = sidebar.querySelector('.nav-drag-pill');
+        if (!pill) {
+            pill = document.createElement('div');
+            pill.className = 'nav-drag-pill';
+            sidebar.appendChild(pill);
+        }
+
+        let isDragging = false;
+        let hoveredItem = null;
+
+        // Extract the URL from the onclick attribute
+        function getNavUrl(item) {
+            const onclick = item.getAttribute('onclick') || '';
+            const match = onclick.match(/smoothNavigate\(['"](.+?)['"]\)/);
+            return match ? match[1] : null;
+        }
+
+        // Get which nav-item is under a touch point
+        function getItemAtPoint(x, y) {
+            for (const item of navItems) {
+                const rect = item.getBoundingClientRect();
+                if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        // Position the glow pill behind a nav item
+        function positionPill(item) {
+            if (!item || !pill) return;
+            const sidebarRect = sidebar.getBoundingClientRect();
+            const itemRect = item.getBoundingClientRect();
+
+            const left = itemRect.left - sidebarRect.left;
+            const top = itemRect.top - sidebarRect.top;
+
+            pill.style.left = left + 'px';
+            pill.style.top = top + 'px';
+            pill.style.width = itemRect.width + 'px';
+            pill.style.height = itemRect.height + 'px';
+        }
+
+        // Highlight a nav item as "hovered"
+        function highlightItem(item) {
+            if (hoveredItem === item) return;
+
+            // Un-highlight previous
+            if (hoveredItem) {
+                hoveredItem.classList.remove('drag-hover');
+                hoveredItem.style.transform = '';
+            }
+
+            hoveredItem = item;
+
+            if (item) {
+                item.classList.add('drag-hover');
+                item.style.transform = 'scale(1.15)';
+                positionPill(item);
+                pill.classList.add('visible');
+
+                // Haptic feedback (if supported)
+                if (navigator.vibrate) {
+                    navigator.vibrate(8);
+                }
+            }
+        }
+
+        function clearHighlight() {
+            if (hoveredItem) {
+                hoveredItem.classList.remove('drag-hover');
+                hoveredItem.style.transform = '';
+                hoveredItem = null;
+            }
+            if (pill) pill.classList.remove('visible');
+        }
+
+        // ── Touch Events ──
+        sidebar.addEventListener('touchstart', function(e) {
+            if (!isMobileNav()) return;
+
+            const touch = e.touches[0];
+            const item = getItemAtPoint(touch.clientX, touch.clientY);
+
+            if (item && navItems.includes(item)) {
+                isDragging = true;
+                highlightItem(item);
+                sidebar.style.touchAction = 'none';
+            }
+        }, { passive: false });
+
+        sidebar.addEventListener('touchmove', function(e) {
+            if (!isDragging || !isMobileNav()) return;
+            e.preventDefault();
+
+            const touch = e.touches[0];
+            const item = getItemAtPoint(touch.clientX, touch.clientY);
+
+            if (item && navItems.includes(item)) {
+                highlightItem(item);
+            }
+        }, { passive: false });
+
+        sidebar.addEventListener('touchend', function(e) {
+            if (!isDragging || !isMobileNav()) return;
+
+            isDragging = false;
+            sidebar.style.touchAction = '';
+
+            if (hoveredItem) {
+                const targetItem = hoveredItem;
+
+                // Bounce animation on release
+                targetItem.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                targetItem.style.transform = 'scale(1.25)';
+
+                setTimeout(() => {
+                    targetItem.style.transform = 'scale(1)';
+                }, 150);
+
+                setTimeout(() => {
+                    targetItem.style.transform = '';
+                    targetItem.style.transition = '';
+                }, 500);
+
+                // Stronger haptic on release
+                if (navigator.vibrate) {
+                    navigator.vibrate(15);
+                }
+
+                // Navigate to the selected tab
+                const url = getNavUrl(targetItem);
+                if (url) {
+                    setTimeout(() => {
+                        smoothNavigate(url);
+                    }, 200);
+                }
+            }
+
+            clearHighlight();
+        }, { passive: false });
+
+        sidebar.addEventListener('touchcancel', function() {
+            isDragging = false;
+            sidebar.style.touchAction = '';
+            clearHighlight();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setup);
+    } else {
+        setup();
+    }
+})();
